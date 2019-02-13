@@ -96,7 +96,7 @@ void stepperDegree42(eSteppers index, eDir direction, int degree);
  * @param turn = 0~10;
  */
 void stepperTurn42(eSteppers index, eDir direction, double turn);
-void stepperTurn42(eSteppers index, eDir direction, int turn)；
+void stepperTurn42(eSteppers index, eDir direction, int turn);
 
 /*
  * @brief motor stop rotating.

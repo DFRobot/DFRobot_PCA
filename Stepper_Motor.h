@@ -4,8 +4,17 @@
 #include <Wire.h>
 
 
+enum eAddress{
+    Address1 = 0x40, Address2 = 0x41,
+    Address3 = 0x42, Address4 = 0x43,
+    Address5 = 0x44, Address6 = 0x45,
+    Address7 = 0x46, Address8 = 0x47,
+    Address9 = 0x48, Address10 = 0x49, 
+    Address11 = 0x4A, Address12 = 0x4B,
+    Address13 = 0x4C, Address14 = 0x4D,
+    Address15 = 0x4E, Address16 = 0x4F
+};
 
-#define PCA9685_ADDRESS   0x40
 #define MODE1   0x00
 #define MODE2   0x01
 #define SUBADR1   0x02
@@ -49,7 +58,7 @@
     /**
      * The user can choose the step motor model.
      */
-enum Stepper { 
+enum eStepper { 
   //% block="42"
   Ste1 = 1,
   //% block="28"
@@ -59,42 +68,42 @@ enum Stepper {
 /**
 * The user can select the 8 steering gear controller.
 */
-enum Servos {
-  S1 = 0x08,
-  S2 = 0x07,
-  S3 = 0x06,
-  S4 = 0x05,
-  S5 = 0x04,
-  S6 = 0x03,
-  S7 = 0x02,
-  S8 = 0x01
+enum eServos {
+    S0 = 0x01,
+    S1 = 0x02,
+    S2 = 0x03,
+    S3 = 0x04,
+    S4 = 0x05,
+    S5 = 0x06,
+    S6 = 0x07,
+    S7 = 0x08
 };
 
 /**
 * The user selects the 4-way dc motor.
 */
-enum Motors {
-  M1 = 0x1,
-  M2 = 0x2,
-  M3 = 0x3,
-  M4 = 0x4,
-  ALL = 0x5
+enum eMotors {
+    M1 = 0x1,
+    M2 = 0x2,
+    M3 = 0x3,
+    M4 = 0x4,
+    ALL = 0x5
 };
 
 /**
 * The user defines the motor rotation direction.
 */
-enum Dir {
-  //% blockId="CW" block="CW"
-  CW = 1,
-  //% blockId="CCW" block="CCW"
-  CCW = -1,
+enum eDir {
+    //% blockId="CW" block="CW"
+    CW = 1,
+    //% blockId="CCW" block="CCW"
+    CCW = -1,
 };
 
 /**
 * The user can select a two-path stepper motor controller.
 */
-enum Steppers {
+enum eSteppers {
   M1_M2 = 0x1,
   M3_M4 = 0x2
 };
@@ -102,32 +111,34 @@ enum Steppers {
 
 class Stepper_Motor
 {
-  public:
- 
-  Stepper_Motor();
-  ~Stepper_Motor();
-  
-  void    servo(Servos index, int degree),
-          motorRun(Motors index, Dir direction, int speed),
-          stepperDegree42(Steppers index, Dir direction, int degree),
-          stepperTurn42(Steppers index, Dir direction, double turn),
-          stepperTurn42(Steppers index, Dir direction, int turn),
-          motorStop(Motors index);
+    public:
+    
+    Stepper_Motor();
+    ~Stepper_Motor();
+    
+    void    servo(eServos index, int degree),
+            setI2cAddr(uint16_t addr),
+            motorRun(eMotors index, eDir direction, int speed),
+            stepperDegree42(eSteppers index, eDir direction, int degree),
+            stepperTurn42(eSteppers index, eDir direction, double turn),
+            stepperTurn42(eSteppers index, eDir direction, int turn),
+            motorStop(eMotors index);
 
+    bool    begin();
 
-
-  private:
-  
-  int    i2cRead(int addr, int reg);
-  
-  void   i2cWrite(int addr, int reg, int value),
-         i2cWriteBuffer(int addr, unsigned char *p, int len),
-         initPCA9685(),
-         setFreq(int freq),
-         setPwm(int channel, int on, int off),
-         setStepper42(int index, bool dir);
-
-  bool initialized;
+    private:
+    
+    int    i2cRead(int addr, int reg);
+    uint8_t i2caddr;
+    
+    void   i2cWrite(int addr, int reg, int value),
+           i2cWriteBuffer(int addr, unsigned char *p, int len),
+           initPCA9685(),
+           setFreq(int freq),
+           setPwm(int channel, int on, int off),
+           setStepper42(int index, bool dir);
+    
+    bool   scan(), initialized;
 
 };
 

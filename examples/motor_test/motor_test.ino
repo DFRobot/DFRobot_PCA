@@ -38,7 +38,7 @@ void setup() {
     Serial.begin(115200);
     Wire.begin();
     motor.setI2cAddr(Address16);
-    motor.motorRun(M3, CCW, 200);//control the motor M3 to rotate anticlockwise at the speed of 200 
+    motor.motorRun(M2, CCW, 200);//control the motor M3 to rotate anticlockwise at the speed of 200 
     //motor.motorStop(M2);//control the motor to stop rotatig.
 
 }
