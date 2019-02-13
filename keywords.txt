@@ -1,0 +1,57 @@
+#######################################
+# Syntax Coloring DFRobot_VL53L2X
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+DFRobot_VL53L1X	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################	
+
+motorRun	KEYWORD2
+motorStop	KEYWORD2
+setI2cAddr	KEYWORD2
+stepperDegree42	KEYWORD2
+stepperTurn42	KEYWORD2
+servo	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+Address1	LITERAL1
+Address2	LITERAL1
+Address3	LITERAL1
+Address4	LITERAL1
+Address5	LITERAL1
+Address6	LITERAL1
+Address7	LITERAL1
+Address8	LITERAL1
+Address9	LITERAL1
+Address10	LITERAL1
+Address11	LITERAL1
+Address12	LITERAL1
+Address13	LITERAL1
+Address14	LITERAL1
+Address15	LITERAL1
+Address16	LITERAL1
+M1	LITERAL1
+M2	LITERAL1
+M3	LITERAL1
+M4	LITERAL1
+CW	LITERAL1
+CCW	LITERAL1
+S1	LITERAL1
+S2	LITERAL1
+S3	LITERAL1
+S4	LITERAL1
+S5	LITERAL1
+S6	LITERAL1
+S7	LITERAL1
+S8	LITERAL1
+M1_M2	LITERAL1
+M3_M4	LITERAL1
+#######################################
+
+
