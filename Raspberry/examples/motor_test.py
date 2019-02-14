@@ -29,7 +29,7 @@ date  2019-1-30
 import time
 import sys
 sys.path.append('../')
-from Stepper_Motor import STEPPER
+from DFRobot_Stepper_Motor import STEPPER
 
 _PCA9685_ADDRESS1  = 0x40
 _PCA9685_ADDRESS2  = 0x41

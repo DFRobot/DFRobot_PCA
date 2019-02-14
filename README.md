@@ -41,26 +41,26 @@ Download the library ZIP file and unzip it to the Arduino folder of the library.
 #include "Stepper_Motor.h"
 
 /* 
+ * @brief Set IIC adress by setting the hardware
+ *
+ * @param addr = PCA_Address1 = 0x40, PCA_Address2 = 0x41,
+                 PCA_Address3 = 0x42, PCA_Address4 = 0x43,
+                 PCA_Address5 = 0x44, PCA_Address6 = 0x45,
+                 PCA_Address7 = 0x46, PCA_Address8 = 0x47,
+                 PCA_Address9 = 0x48, PCA_Address10 = 0x49, 
+                 PCA_Address11 = 0x4A, PCA_Address12 = 0x4B,
+                 PCA_Address13 = 0x4C, PCA_Address14 = 0x4D,
+                 PCA_Address15 = 0x4E, PCA_Address16 = 0x4F
+ */
+DFRobot_Stepper_Motor(eAddress i2caddr);
+
+/* 
  * @brief To judge which address is being used 
  *
  * @return true if PCA8591 init succeed
  * @return false if PCA8591 init failed
  */
 bool begin();
-
-/* 
- * @brief Set IIC adress by setting the hardware
- *
- * @param addr = Address1 = 0x40, Address2 = 0x41,
-                 Address3 = 0x42, Address4 = 0x43,
-                 Address5 = 0x44, Address6 = 0x45,
-                 Address7 = 0x46, Address8 = 0x47,
-                 Address9 = 0x48, Address10 = 0x49, 
-                 Address11 = 0x4A, Address12 = 0x4B,
-                 Address13 = 0x4C, Address14 = 0x4D,
-                 Address15 = 0x4E, Address16 = 0x4F
- */
-void setI2cAddr(uint16_t addr);
 
 /*
  *@brief Motor rotates at a fixed speed;
