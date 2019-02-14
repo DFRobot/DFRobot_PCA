@@ -2,8 +2,8 @@
 /*!
    file stepper_test.ino
    DFR0587 Gravity: I2C DC Motor/Stepper Motor Driver
-   这个模块通过I2C总线连接Arduino主板,并外接电源
-   这个demo可以用于控制步进电机机转动
+   Connect this module to Arduino board via I2C, and plug in external power supply.
+   This demo can be used to control stepper motor.
    The module has 16 I2C addresses, these addresses are:
    Address1  0x40   A3 = 0  A2 = 0 A1 = 0  A0 = 0
    Address2  0x41   A3 = 0  A2 = 0 A1 = 0  A0 = 1
