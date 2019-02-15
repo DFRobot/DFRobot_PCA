@@ -115,6 +115,11 @@ def stepperTurn42(self, steppers_index, dir_direction, turn);
 '''
 def motorStop(self, motors_index)
 
+'''
+@brief PCA9685 reset
+'''
+def reset()
+
 ```
 
 

@@ -105,7 +105,10 @@ void stepperTurn42(eSteppers index, eDir direction, int turn);
  */
 void motorStop(eMotors index);
 
-
+/*
+ * @brief PCA9685 reset
+ */
+void reset();
 ```
 
 
