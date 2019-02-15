@@ -131,10 +131,10 @@ class STEPPER:
             self.setPwm(pp, 0, 0)
             self.setPwm(pn, 0, -speed)
 
-    def stepperDegree42(self, steppers_index, dir_direction, degree):
+    def stepperDegree(self, steppers_index, dir_direction, degree):
         if self.begin() == True:
             self.initPCA9685()
-        self.setStepper42(steppers_index, dir_direction > 0);
+        self.setStepper(steppers_index, dir_direction > 0);
         if (degree == 0):
             return
         time.sleep( (50 * degree) / (360 * 50))
@@ -145,11 +145,11 @@ class STEPPER:
             self.motorStop(self.M3)
             self.motorStop(self.M4)
 
-    def stepperTurn42(self, steppers_index, dir_direction, double_turn):
-        self.stepperDegree42(steppers_index, dir_direction, (double_turn * 360))
+    def stepperTurn(self, steppers_index, dir_direction, double_turn):
+        self.stepperDegree(steppers_index, dir_direction, (double_turn * 360))
 
-    def stepperTurn42(self, steppers_index, dir_direction, turn):
-        self.stepperDegree42(steppers_index, dir_direction, turn * 360)
+    def stepperTurn(self, steppers_index, dir_direction, turn):
+        self.stepperDegree(steppers_index, dir_direction, turn * 360)
 
     def motorStop(self, motors_index):
         pn = 0
@@ -197,7 +197,7 @@ class STEPPER:
         self.i2cWrite(self._MODE1, newmode)
         self.i2cWrite(self._PRESCALE, 0x84)
         self.i2cWrite(self._MODE1, oldmode)
-        time.sleep(5)
+        time.sleep(0.005)
         self.i2cWrite(self._MODE1, oldmode | 0xa1)
         
     def setPwm(self, channel, on, off):

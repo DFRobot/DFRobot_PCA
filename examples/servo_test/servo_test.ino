@@ -37,6 +37,9 @@ DFRobot_Stepper_Motor motor(PCA_Address16);
 void setup() {
     Serial.begin(115200);
     Wire.begin();
+    while(!motor.begin()){                //Begin return True if succeed, otherwise return False
+        delay(2000);
+    }
 }
 
 void loop() {

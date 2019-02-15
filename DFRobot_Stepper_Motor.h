@@ -116,10 +116,11 @@ class DFRobot_Stepper_Motor
     
     void    servo(eServos index, int degree),
             motorRun(eMotors index, eDir direction, int speed),
-            stepperDegree42(eSteppers index, eDir direction, int degree),
-            stepperTurn42(eSteppers index, eDir direction, double turn),
-            stepperTurn42(eSteppers index, eDir direction, int turn),
-            motorStop(eMotors index);
+            stepperDegree(eSteppers index, eDir direction, int degree),
+            stepperTurn(eSteppers index, eDir direction, double turn),
+            stepperTurn(eSteppers index, eDir direction, int turn),
+            motorStop(eMotors index),
+            reset();
 
     bool    begin();
 

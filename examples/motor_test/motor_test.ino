@@ -37,11 +37,14 @@ DFRobot_Stepper_Motor motor(PCA_Address16);
 void setup() {
     Serial.begin(115200);
     Wire.begin();
-    motor.motorRun(PCA_M2, PCA_CCW, 200);//control the motor M3 to rotate anticlockwise at the speed of 200 
-    //motor.motorStop(PCA_M2);//control the motor to stop rotatig.
-
+    while(!motor.begin()){                //Begin return True if succeed, otherwise return False
+        delay(2000);
+    }
 }
 
 void loop() {
-
+    motor.motorRun(PCA_M2, PCA_CCW, 200);//control the motor M3 to rotate anticlockwise at the speed of 200 
+    delay(5000)
+    motor.motorStop(PCA_M2);//control the motor to stop rotatig.
+    delay(2000)
 }

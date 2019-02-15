@@ -32,6 +32,7 @@ void DFRobot_Stepper_Motor::servo(eServos index, int degree)
         this->initPCA9685();
     }
     // 100hz
+    degree = abs(degree);
     uint32_t v_us = (degree * 10 + 600); // 0.6ms ~ 2.4ms
     uint32_t value = v_us * 4095 / (1000000 / 50);
     this->setPwm(8 - index, 0, value);
@@ -42,6 +43,7 @@ void DFRobot_Stepper_Motor::motorRun(eMotors index, eDir direction, int speed)
     if (!initialized) {
         this->initPCA9685();
     }
+    speed = abs(speed);
     speed = speed * 16 * direction; // map 255 to 4096
     if (speed >= 4096) {
         speed = 4095;
@@ -80,21 +82,17 @@ void DFRobot_Stepper_Motor::motorRun(eMotors index, eDir direction, int speed)
     }
 }
 
-void DFRobot_Stepper_Motor::stepperDegree42(eSteppers index, eDir direction, int degree)
+void DFRobot_Stepper_Motor::stepperDegree(eSteppers index, eDir direction, int degree)
 {
     if (!initialized) {
         this->initPCA9685();
     }
-    // let Degree = Math.abs(degree);
-    // Degree = Degree * direction;
-    //setFreq(100);````
     this->setStepper42(index, direction > 0);
     if (degree == 0) { 
         return;
     }
     uint32_t Degree = abs(degree);
     delay( (50000 * Degree) / (360 * 50) + 80);
-    Serial.println("hello");
     if (index == 1) {
         this->motorStop(PCA_M1);
         this->motorStop(PCA_M2);
@@ -104,14 +102,14 @@ void DFRobot_Stepper_Motor::stepperDegree42(eSteppers index, eDir direction, int
     }
 }
 
-void DFRobot_Stepper_Motor::stepperTurn42(eSteppers index, eDir direction, double turn)
+void DFRobot_Stepper_Motor::stepperTurn(eSteppers index, eDir direction, double turn)
 {
-    this->stepperDegree42(index, direction, (int)(turn * 360));
+    this->stepperDegree(index, direction, (int)(turn * 360));
 }
 
-void DFRobot_Stepper_Motor::stepperTurn42(eSteppers index, eDir direction, int turn)
+void DFRobot_Stepper_Motor::stepperTurn(eSteppers index, eDir direction, int turn)
 {
-    this->stepperDegree42(index, direction, turn * 360);
+    this->stepperDegree(index, direction, turn * 360);
 }
 
 void DFRobot_Stepper_Motor::motorStop(eMotors index)
@@ -119,7 +117,6 @@ void DFRobot_Stepper_Motor::motorStop(eMotors index)
     if (index > 5 || index <= 0)
         return;
     int pn, pp;
-    //Serial.println(index);
     if(index == 1){
         pp = 9;
         pn = 8;
@@ -255,4 +252,8 @@ bool DFRobot_Stepper_Motor::scan()
     return false;
 }
 
-
+void DFRobot_Stepper_Motor::reset()
+{
+    this->i2cWrite(i2caddr, DFROBOT_PCA_MODE1, 0x00);
+    this->i2cWrite(i2caddr, DFROBOT_PCA_MODE2, 0x04);
+}

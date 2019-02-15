@@ -39,12 +39,15 @@ DFRobot_Stepper_Motor motor(PCA_Address16);
 void setup() {
     Serial.begin(115200);
     Wire.begin();
-    motor.stepperDegree42(PCA_M1_M2,  PCA_CW,  360);
-    delay(2000);
-    motor.stepperTurn42(PCA_M1_M2,  PCA_CCW,  10);
-    delay(2000);
+    while(!motor.begin()){                //Begin return True if succeed, otherwise return False
+        delay(2000);
+    }
 }
 
 void loop() {
-
+    motor.stepperDegree(PCA_M1_M2,  PCA_CW,  360);
+    delay(2000);
+    motor.stepperTurn(PCA_M1_M2,  PCA_CCW,  10);
+    delay(2000);
+    //motor.reset();
 }
