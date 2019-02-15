@@ -94,7 +94,7 @@ class STEPPER:
     def servo(self, servos_index, degree):
         if self.begin() == True:
             self.initPCA9685()
-
+        degree = abs(degree)
         v_us = (degree * 10 + 600)
         value = v_us * 4095 / (1000000 / 50)
         self.setPwm(8 - servos_index, 0, value)
@@ -102,6 +102,7 @@ class STEPPER:
     def motorRun(self, motors_index, dir_direction, speed):
         if self.begin() == True:
             self.initPCA9685()
+        speed = abs(speed)
         speed = speed * 16 * dir_direction
         if (speed >= 4096):
             speed = 4095
@@ -134,6 +135,7 @@ class STEPPER:
     def stepperDegree(self, steppers_index, dir_direction, degree):
         if self.begin() == True:
             self.initPCA9685()
+        degree = abs(degree)
         self.setStepper(steppers_index, dir_direction > 0);
         if (degree == 0):
             return
