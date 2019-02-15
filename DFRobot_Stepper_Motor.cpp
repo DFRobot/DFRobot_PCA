@@ -172,9 +172,7 @@ void DFRobot_Stepper_Motor::initPCA9685()
         Wire.begin();
         this->i2cWrite(i2caddr, DFROBOT_PCA_MODE1, 0x00);
         this->setFreq(50);
-        this->initialized = true;//Serial.println(i2caddr);
-        //Serial.println("I2C init succeed");
-        Serial.println(i2caddr);
+        this->initialized = true;
     } else{
         this->initialized = false;
         Serial.print("I2C address is ");Serial.println(i2caddr,HEX);

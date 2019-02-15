@@ -39,6 +39,7 @@ void setup() {
     Wire.begin();
     while(!motor.begin()){                //Begin return True if succeed, otherwise return False
         delay(2000);
+        Serial.println("PCA9685 init failed");
     }
 }
 

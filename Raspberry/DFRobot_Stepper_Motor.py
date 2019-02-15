@@ -211,7 +211,7 @@ class STEPPER:
         buf.append((off >> 8) & 0xff)
         self.i2cWriteBuffer(channel, buf, 4)
     
-    def setStepper42(self, index, dir):
+    def setStepper(self, index, dir):
         if (index == 1):
             if (dir):
                 self.setPwm(10, self._BYG_CHA_L, self._BYG_CHA_H)

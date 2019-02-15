@@ -1,6 +1,6 @@
 # PCA9685
 
-PCA9685is a chip based on I2C bus communication.<br>
+PCA9685 is a chip based on I2C bus communication.<br>
 This library can help you to control motor, servo and stepper motor by PCA9685.<br>
 The library is designed for DFR0587 Gravity: I2C DC Motor/Stepper Motor Driver.<br>
 Please provide external power for the motor drive plate.<br>
@@ -45,22 +45,22 @@ $> python DFRobot_INA219_test.py
 @brief Init The PCA9685
 
 @param bus      I2C bus
-@param addr =   _PCA9685_ADDRESS1  = 0x40
-                _PCA9685_ADDRESS2  = 0x41
-                _PCA9685_ADDRESS3  = 0x42
-                _PCA9685_ADDRESS4  = 0x43
-                _PCA9685_ADDRESS5  = 0x44
-                _PCA9685_ADDRESS6  = 0x45
-                _PCA9685_ADDRESS7  = 0x46
-                _PCA9685_ADDRESS8  = 0x47
-                _PCA9685_ADDRESS9  = 0x48
-                _PCA9685_ADDRESS10  = 0x49
-                _PCA9685_ADDRESS11  = 0x4A
-                _PCA9685_ADDRESS12  = 0x4B
-                _PCA9685_ADDRESS13  = 0x4C
-                _PCA9685_ADDRESS14  = 0x4D
-                _PCA9685_ADDRESS15  = 0x4E
-                _PCA9685_ADDRESS16  = 0x4F
+@param addr =   PCA9685_ADDRESS1  = 0x40
+                PCA9685_ADDRESS2  = 0x41
+                PCA9685_ADDRESS3  = 0x42
+                PCA9685_ADDRESS4  = 0x43
+                PCA9685_ADDRESS5  = 0x44
+                PCA9685_ADDRESS6  = 0x45
+                PCA9685_ADDRESS7  = 0x46
+                PCA9685_ADDRESS8  = 0x47
+                PCA9685_ADDRESS9  = 0x48
+                PCA9685_ADDRESS10  = 0x49
+                PCA9685_ADDRESS11  = 0x4A
+                PCA9685_ADDRESS12  = 0x4B
+                PCA9685_ADDRESS13  = 0x4C
+                PCA9685_ADDRESS14  = 0x4D
+                PCA9685_ADDRESS15  = 0x4E
+                PCA9685_ADDRESS16  = 0x4F
 '''
 STEPPER(bus, addr)
 
@@ -77,7 +77,7 @@ def begin(self)
 
 @param index = M1,M2,M3,M4
 @param direction = CW(clockwise),CCW(counter-clockwise)
-@param speed = 0~255(????)
+@param speed = 0~255
 '''
 def motorRun(self, motors_index, dir_direction, speed)
 
@@ -105,8 +105,8 @@ def stepperDegree42(self, steppers_index, dir_direction, degree)
 @param direction = CW(clockwise),CCW(counter-clockwise)
 @param turn = 0~10
 '''
-def stepperTurn42(self, steppers_index, dir_direction, double_turn);
-def stepperTurn42(self, steppers_index, dir_direction, turn);
+def stepperTurn(self, steppers_index, dir_direction, double_turn);
+def stepperTurn(self, steppers_index, dir_direction, turn);
 
 '''
 @brief motor stop rotating.
