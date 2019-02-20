@@ -45,7 +45,7 @@ void setup() {
 
 void loop() {
     motor.motorRun(PCA_M2, PCA_CCW, 200);//control the motor M3 to rotate anticlockwise at the speed of 200 
-    delay(5000)
+    delay(5000);
     motor.motorStop(PCA_M2);//control the motor to stop rotatig.
-    delay(2000)
+    delay(2000);
 }
