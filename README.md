@@ -40,55 +40,59 @@ Download the library ZIP file and unzip it to the Arduino folder of the library.
 
 #include "Stepper_Motor.h"
 
-/* 
- * @brief Set IIC adress by setting the hardware
+/*!
+ * @brief Set IIC address by setting the hardware
  *
- * @param addr = PCA_Address1 = 0x40, PCA_Address2 = 0x41,
-                 PCA_Address3 = 0x42, PCA_Address4 = 0x43,
-                 PCA_Address5 = 0x44, PCA_Address6 = 0x45,
-                 PCA_Address7 = 0x46, PCA_Address8 = 0x47,
-                 PCA_Address9 = 0x48, PCA_Address10 = 0x49, 
-                 PCA_Address11 = 0x4A, PCA_Address12 = 0x4B,
-                 PCA_Address13 = 0x4C, PCA_Address14 = 0x4D,
-                 PCA_Address15 = 0x4E, PCA_Address16 = 0x4F
+ * @param IIC Address setting
+        addr = PCA_Address1 = 0x40, PCA_Address2 = 0x41,
+               PCA_Address3 = 0x42, PCA_Address4 = 0x43,
+               PCA_Address5 = 0x44, PCA_Address6 = 0x45,
+               PCA_Address7 = 0x46, PCA_Address8 = 0x47,
+               PCA_Address9 = 0x48, PCA_Address10 = 0x49, 
+               PCA_Address11 = 0x4A, PCA_Address12 = 0x4B,
+               PCA_Address13 = 0x4C, PCA_Address14 = 0x4D,
+               PCA_Address15 = 0x4E, PCA_Address16 = 0x4F
  */
 DFRobot_Stepper_Motor(eAddress i2caddr);
 
-/* 
- * @brief To judge which address is being used 
+/*!
+ * @brief To judge PCA9685 inited successfully
  *
- * @return true if PCA8591 init succeed
- * @return false if PCA8591 init failed
+ * @return true if PCA9685 init succeed
+ * @return false if PCA9685 init failed
  */
 bool begin();
 
-/*
+/*!
  *@brief Motor rotates at a fixed speed;
  *
- *@param index = M1,M2,M3,M4;
+ *@param index = PCA_M1,PCA_M2,PCA_M3,PCA_M4,PCA_ALL(All motors);
  *@param direction = CW(clockwise),CCW(counter-clockwise);
  *@param speed = 0~255(speed);
  */
 void motorRun(eMotors index, eDir direction, int speed);
 
-/* 
+/*!
  * @brief Servo rotates to the position of a fixed degree.
  * 
- * @param index =S0,S1,S2,S3,S4,S5,S6,S7;
+ * @param index =PCA_S0,PCA_S1,
+                 PCA_S2,PCA_S3,
+                 PCA_S4,PCA_S5,
+                 PCA_S6,PCA_S7;
  * @param degree = 0~180(degree);
  */
 void servo(eServos index, int degree);
 
-/*
+/*!
  * @brief Stepper motor rotates by an angle of a fixed degree.
  *
  * @param index = M1_M2,M3_M4(stepper motor interface);
  * @param direction = CW(clockwise),CCW(counter-clockwise);
  * @param degree = 0~360;
  */
-void stepperDegree42(eSteppers index, eDir direction, int degree);
+void stepperDegree(eSteppers index, eDir direction, int degree);
 
-/*
+/*!
  * @brief Stepper motor rotates for fixed turns. 
  *
  * @param index = M1_M2,M3_M4(stepper motor interface);
@@ -98,14 +102,14 @@ void stepperDegree42(eSteppers index, eDir direction, int degree);
 void stepperTurn(eSteppers index, eDir direction, double turn);
 void stepperTurn(eSteppers index, eDir direction, int turn);
 
-/*
- * @brief motor stop rotating.
+/*!
+ * @brief Stop motor running.
  *
- * @param index = M1,M2,M3,M4
+ * @param index = PCA_M1,PCA_M2,PCA_M3,PCA_M4,PCA_ALL(All motors);
  */
 void motorStop(eMotors index);
 
-/*
+/*!
  * @brief PCA9685 reset
  */
 void reset();

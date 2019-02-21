@@ -108,23 +108,28 @@ class STEPPER:
             speed = 4095
         if (speed <= -4096):
             speed = -4095
-        if (motors_index > 5 or motors_index <= 0):
+        if (motors_index > ALL or motors_index < M1):
             return
         pn = 0
         pp = 0
         
-        if(motors_index == 1):
+        if(motors_index == M1):
             pp = 9;
             pn = 8;
-        elif(motors_index == 2):
+        elif(motors_index == M2):
             pp = 10
             pn = 11
-        elif(motors_index == 3):
+        elif(motors_index == M3):
             pp = 13
             pn = 12
-        elif(motors_index == 4):
+        elif(motors_index == M4):
             pp = 14
             pn = 15
+        elif(motors_index == ALL):
+            self.motorRun(M1, dir_direction, speed)
+            self.motorRun(M2, dir_direction, speed)
+            self.motorRun(M3, dir_direction, speed)
+            self.motorRun(M4, dir_direction, speed)
         if (speed >= 0):
             self.setPwm(pp, 0, speed)
             self.setPwm(pn, 0, speed)
@@ -135,10 +140,10 @@ class STEPPER:
     def stepperDegree(self, steppers_index, dir_direction, degree):
         if self.begin() == True:
             self.initPCA9685()
+        if (degree == 0):
+        return
         degree = abs(degree)
         self.setStepper(steppers_index, dir_direction > 0);
-        if (degree == 0):
-            return
         time.sleep( (50 * degree) / (360 * 50))
         if (steppers_index == 1):
             self.motorStop(self.M1)
@@ -157,18 +162,23 @@ class STEPPER:
         pn = 0
         pp = 0
         
-        if(motors_index == 1):
+        if(motors_index == M1):
             pp = 9;
             pn = 8;
-        elif(motors_index == 2):
+        elif(motors_index == M2):
             pp = 10
             pn = 11
-        elif(motors_index == 3):
+        elif(motors_index == M3):
             pp = 13
             pn = 12
-        elif(motors_index == 4):
+        elif(motors_index == M4):
             pp = 14
             pn = 15
+        elif(motors_index == ALL):
+            self.motorStop(M1)
+            self.motorStop(M2)
+            self.motorStop(M3)
+            self.motorStop(M4)
         self.setPwm(pp, 0, 0)
         self.setPwm(pn, 0, 0)
 

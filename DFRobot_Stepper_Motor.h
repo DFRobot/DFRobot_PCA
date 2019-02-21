@@ -111,7 +111,7 @@ class DFRobot_Stepper_Motor
 {
     public:
     
-    DFRobot_Stepper_Motor(eAddress i2caddr);
+    DFRobot_Stepper_Motor(eAddress i2cAddr);
     ~DFRobot_Stepper_Motor();
     
     void    servo(eServos index, int degree),
@@ -127,7 +127,7 @@ class DFRobot_Stepper_Motor
     private:
     
     int    i2cRead(int addr, int reg);
-    uint8_t i2caddr;
+    uint8_t i2cAddr;
     
     void   i2cWrite(int addr, int reg, int value),
            i2cWriteBuffer(int addr, unsigned char *p, int len),
