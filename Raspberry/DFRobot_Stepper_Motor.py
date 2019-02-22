@@ -108,24 +108,24 @@ class STEPPER:
             speed = 4095
         if (speed <= -4096):
             speed = -4095
-        if (motors_index > ALL or motors_index < M1):
+        if (motors_index > self.ALL or motors_index < self.M1):
             return
         pn = 0
         pp = 0
         
-        if(motors_index == M1):
+        if(motors_index == self.M1):
             pp = 9;
             pn = 8;
-        elif(motors_index == M2):
+        elif(motors_index == self.M2):
             pp = 10
             pn = 11
-        elif(motors_index == M3):
+        elif(motors_index == self.M3):
             pp = 13
             pn = 12
-        elif(motors_index == M4):
+        elif(motors_index == self.M4):
             pp = 14
             pn = 15
-        elif(motors_index == ALL):
+        elif(motors_index == self.ALL):
             self.motorRun(M1, dir_direction, speed)
             self.motorRun(M2, dir_direction, speed)
             self.motorRun(M3, dir_direction, speed)
@@ -141,7 +141,7 @@ class STEPPER:
         if self.begin() == True:
             self.initPCA9685()
         if (degree == 0):
-        return
+            return
         degree = abs(degree)
         self.setStepper(steppers_index, dir_direction > 0);
         time.sleep( (50 * degree) / (360 * 50))
@@ -162,19 +162,19 @@ class STEPPER:
         pn = 0
         pp = 0
         
-        if(motors_index == M1):
+        if(motors_index == self.M1):
             pp = 9;
             pn = 8;
-        elif(motors_index == M2):
+        elif(motors_index == self.M2):
             pp = 10
             pn = 11
-        elif(motors_index == M3):
+        elif(motors_index == self.M3):
             pp = 13
             pn = 12
-        elif(motors_index == M4):
+        elif(motors_index == self.M4):
             pp = 14
             pn = 15
-        elif(motors_index == ALL):
+        elif(motors_index == self.ALL):
             self.motorStop(M1)
             self.motorStop(M2)
             self.motorStop(M3)

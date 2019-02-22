@@ -43,6 +43,8 @@ def main():
         time.sleep(2)
         motor.motorRun(motor.M3, motor.CCW, 200)
         time.sleep(2)
+        motor.motorStop(motor.M3)
+        time.sleep(2)
         #motor.reset()
 
 if __name__ == "__main__":
