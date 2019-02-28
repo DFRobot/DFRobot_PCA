@@ -75,7 +75,7 @@ def begin(self)
 '''
 @brief Motor rotates at a fixed speed;
 
-@param index = M1,M2,M3,M4
+@param index = M1,M2,M3,M4,M_ALL
 @param direction = CW(clockwise),CCW(counter-clockwise)
 @param speed = 0~255
 '''
@@ -111,7 +111,7 @@ def stepperTurn(self, steppers_index, dir_direction, turn);
 '''
 @brief motor stop rotating.
 
-@param index = M1,M2,M3,M4
+@param index = M1,M2,M3,M4,M_ALL
 '''
 def motorStop(self, motors_index)
 

@@ -64,48 +64,48 @@ DFRobot_Stepper_Motor(eAddress i2caddr);
 bool begin();
 
 /*!
- *@brief Motor rotates at a fixed speed;
+ *@brief Motor rotates at a fixed speed
  *
- *@param index = PCA_M1,PCA_M2,PCA_M3,PCA_M4,PCA_ALL(All motors);
- *@param direction = CW(clockwise),CCW(counter-clockwise);
- *@param speed = 0~255(speed);
+ *@param index = PCA_M1,PCA_M2,PCA_M3,PCA_M4,PCA_M_ALL(All motors)
+ *@param direction = PCA_CW(clockwise),PCA_CCW(counter-clockwise)
+ *@param speed = 0~255(speed)
  */
 void motorRun(eMotors index, eDir direction, int speed);
 
 /*!
- * @brief Servo rotates to the position of a fixed degree.
+ * @brief Servo rotates to the position of a fixed degree
  * 
  * @param index =PCA_S0,PCA_S1,
                  PCA_S2,PCA_S3,
                  PCA_S4,PCA_S5,
-                 PCA_S6,PCA_S7;
- * @param degree = 0~180(degree);
+                 PCA_S6,PCA_S7
+ * @param degree = 0~180(degree)
  */
 void servo(eServos index, int degree);
 
 /*!
- * @brief Stepper motor rotates by an angle of a fixed degree.
+ * @brief Stepper motor rotates by an angle of a fixed degree
  *
- * @param index = M1_M2,M3_M4(stepper motor interface);
- * @param direction = CW(clockwise),CCW(counter-clockwise);
- * @param degree = 0~360;
+ * @param index = PCA_M1_M2,PCA_M3_M4(stepper motor interface)
+ * @param direction = PCA_CW(clockwise),PCA_CCW(counter-clockwise)
+ * @param degree = 0~360
  */
 void stepperDegree(eSteppers index, eDir direction, int degree);
 
 /*!
- * @brief Stepper motor rotates for fixed turns. 
+ * @brief Stepper motor rotates for fixed turns.
  *
- * @param index = M1_M2,M3_M4(stepper motor interface);
- * @param direction = CW(clockwise),CCW(counter-clockwise);
- * @param turn = 0~10;
+ * @param index = PCA_M1_M2,PCA_M3_M4(stepper motor interface)
+ * @param direction = PCA_CW(clockwise),PCA_CCW(counter-clockwise)
+ * @param turn = 0~10
  */
 void stepperTurn(eSteppers index, eDir direction, double turn);
 void stepperTurn(eSteppers index, eDir direction, int turn);
 
 /*!
- * @brief Stop motor running.
+ * @brief Stop motor running
  *
- * @param index = PCA_M1,PCA_M2,PCA_M3,PCA_M4,PCA_ALL(All motors);
+ * @param index = PCA_M1,PCA_M2,PCA_M3,PCA_M4,PCA_M_ALL(All motors)
  */
 void motorStop(eMotors index);
 

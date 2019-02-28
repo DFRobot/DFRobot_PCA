@@ -64,7 +64,7 @@ class STEPPER:
     M2 = 0x2
     M3 = 0x3
     M4 = 0x4
-    ALL = 0x5
+    M_ALL = 0x5
     
     S0 = 0x01
     S1 = 0x02
@@ -108,7 +108,7 @@ class STEPPER:
             speed = 4095
         if (speed <= -4096):
             speed = -4095
-        if (motors_index > self.ALL or motors_index < self.M1):
+        if (motors_index > self.M_ALL or motors_index < self.M1):
             return
         pn = 0
         pp = 0
@@ -125,7 +125,7 @@ class STEPPER:
         elif(motors_index == self.M4):
             pp = 14
             pn = 15
-        elif(motors_index == self.ALL):
+        elif(motors_index == self.M_ALL):
             self.motorRun(M1, dir_direction, speed)
             self.motorRun(M2, dir_direction, speed)
             self.motorRun(M3, dir_direction, speed)
@@ -174,7 +174,7 @@ class STEPPER:
         elif(motors_index == self.M4):
             pp = 14
             pn = 15
-        elif(motors_index == self.ALL):
+        elif(motors_index == self.M_ALL):
             self.motorStop(M1)
             self.motorStop(M2)
             self.motorStop(M3)
