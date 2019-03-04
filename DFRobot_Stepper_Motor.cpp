@@ -187,7 +187,7 @@ void DFRobot_Stepper_Motor::setFreq(int freq)
 {
     uint32_t prescale = 25000000;
 
-    uint32_t prescaleVal = prescale / 4096 / 200 -1;//Math.floor(prescaleval + 0.5);
+    uint32_t prescaleVal = prescale / 4096 / 200 - 1;
     uint8_t oldmode = this->i2cRead(i2cAddr, DFROBOT_PCA_MODE1);
     uint8_t newmode = (oldmode & 0x7F) | 0x10; // sleep
     this->i2cWrite(i2cAddr, DFROBOT_PCA_MODE1, newmode); // go to sleep
