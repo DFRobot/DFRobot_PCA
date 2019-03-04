@@ -79,7 +79,7 @@ def begin(self)
 @param direction = CW(clockwise),CCW(counter-clockwise)
 @param speed = 0~255
 '''
-def motorRun(self, motors_index, dir_direction, speed)
+def motor_run(self, motors_index, dir_direction, speed)
 
 '''
 @brief Servo rotates to the position of a fixed degree.
@@ -96,7 +96,7 @@ def servo(self, servos_index, degree)
 @param direction = CW(clockwise),CCW(counter-clockwise)
 @param degree = 0~360
 '''
-def stepperDegree42(self, steppers_index, dir_direction, degree)
+def stepper_degree(self, steppers_index, dir_direction, degree)
 
 '''
 @brief Stepper motor rotates for fixed turns.
@@ -105,15 +105,15 @@ def stepperDegree42(self, steppers_index, dir_direction, degree)
 @param direction = CW(clockwise),CCW(counter-clockwise)
 @param turn = 0~10
 '''
-def stepperTurn(self, steppers_index, dir_direction, double_turn);
-def stepperTurn(self, steppers_index, dir_direction, turn);
+def stepper_turn(self, steppers_index, dir_direction, double_turn);
+def stepper_turn(self, steppers_index, dir_direction, turn);
 
 '''
 @brief motor stop rotating.
 
 @param index = M1,M2,M3,M4,M_ALL
 '''
-def motorStop(self, motors_index)
+def motor_stop(self, motors_index)
 
 '''
 @brief PCA9685 reset

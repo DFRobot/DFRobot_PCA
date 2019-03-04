@@ -41,6 +41,7 @@ void setup() {
         delay(2000);
         Serial.println("PCA9685 init failed");
     }
+    //motor.reset();
 }
 
 void loop() {
@@ -48,5 +49,4 @@ void loop() {
     delay(5000);
     motor.motorStop(PCA_M3);//control the motor to stop rotatig.
     delay(2000);
-    //motor.reset();
 }

@@ -41,6 +41,7 @@ void setup() {
         delay(2000);
         Serial.println("PCA9685 init failed");
     }
+    //motor.reset();
 }
 
 void loop() {
@@ -48,5 +49,4 @@ void loop() {
     delay(1000);
     motor.servo(PCA_S5, 90);//control the servo of Pin S5 to rotate to the position of 90 degree.
     delay(1000);
-    //motor.reset();
 }

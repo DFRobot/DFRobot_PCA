@@ -39,9 +39,11 @@ while not motor.begin():
 
 def main():
     while True:
-        motor.stepperDegree(motor.M1_M2, motor.CW,  360)
+        motor.motor_run(motor.M3, motor.CW, 200)
         time.sleep(2)
-        motor.stepperTurn(motor.M1_M2, motor.CCW,  10)
+        motor.motor_run(motor.M3, motor.CCW, 200)
+        time.sleep(2)
+        motor.motor_stop(motor.M3)
         time.sleep(2)
         #motor.reset()
 

@@ -97,9 +97,9 @@ class STEPPER:
         degree = abs(degree)
         v_us = (degree * 10 + 600)
         value = v_us * 4095 / (1000000 / 50)
-        self.setPwm(8 - servos_index, 0, value)
+        self.set_pwm(8 - servos_index, 0, value)
 
-    def motorRun(self, motors_index, dir_direction, speed):
+    def motor_run(self, motors_index, dir_direction, speed):
         if self.begin() == True:
             self.initPCA9685()
         speed = abs(speed)
@@ -126,39 +126,39 @@ class STEPPER:
             pp = 14
             pn = 15
         elif(motors_index == self.M_ALL):
-            self.motorRun(M1, dir_direction, speed)
-            self.motorRun(M2, dir_direction, speed)
-            self.motorRun(M3, dir_direction, speed)
-            self.motorRun(M4, dir_direction, speed)
+            self.motor_run(M1, dir_direction, speed)
+            self.motor_run(M2, dir_direction, speed)
+            self.motor_run(M3, dir_direction, speed)
+            self.motor_run(M4, dir_direction, speed)
         if (speed >= 0):
-            self.setPwm(pp, 0, speed)
-            self.setPwm(pn, 0, speed)
+            self.set_pwm(pp, 0, speed)
+            self.set_pwm(pn, 0, speed)
         else:
-            self.setPwm(pp, 0, 0)
-            self.setPwm(pn, 0, -speed)
+            self.set_pwm(pp, 0, 0)
+            self.set_pwm(pn, 0, -speed)
 
-    def stepperDegree(self, steppers_index, dir_direction, degree):
+    def stepper_degree(self, steppers_index, dir_direction, degree):
         if self.begin() == True:
             self.initPCA9685()
         if (degree == 0):
             return
         degree = abs(degree)
-        self.setStepper(steppers_index, dir_direction > 0);
+        self.set_stepper(steppers_index, dir_direction > 0);
         time.sleep( (50 * degree) / (360 * 50))
         if (steppers_index == 1):
-            self.motorStop(self.M1)
-            self.motorStop(self.M2)
+            self.motor_stop(self.M1)
+            self.motor_stop(self.M2)
         else:                   
-            self.motorStop(self.M3)
-            self.motorStop(self.M4)
+            self.motor_stop(self.M3)
+            self.motor_stop(self.M4)
 
-    def stepperTurn(self, steppers_index, dir_direction, double_turn):
-        self.stepperDegree(steppers_index, dir_direction, (double_turn * 360))
+    def stepper_turn(self, steppers_index, dir_direction, double_turn):
+        self.stepper_degree(steppers_index, dir_direction, (double_turn * 360))
 
-    def stepperTurn(self, steppers_index, dir_direction, turn):
-        self.stepperDegree(steppers_index, dir_direction, turn * 360)
+    def stepper_turn(self, steppers_index, dir_direction, turn):
+        self.stepper_degree(steppers_index, dir_direction, turn * 360)
 
-    def motorStop(self, motors_index):
+    def motor_stop(self, motors_index):
         pn = 0
         pp = 0
         
@@ -175,44 +175,40 @@ class STEPPER:
             pp = 14
             pn = 15
         elif(motors_index == self.M_ALL):
-            self.motorStop(M1)
-            self.motorStop(M2)
-            self.motorStop(M3)
-            self.motorStop(M4)
-        self.setPwm(pp, 0, 0)
-        self.setPwm(pn, 0, 0)
+            self.motor_stop(M1)
+            self.motor_stop(M2)
+            self.motor_stop(M3)
+            self.motor_stop(M4)
+        self.set_pwm(pp, 0, 0)
+        self.set_pwm(pn, 0, 0)
 
-    def i2cWriteBuffer(self, channel, p, len):
+    def i2c_write_buffer(self, channel, p, len):
         self.i2cbus.write_i2c_block_data(self.i2cAddr, (self._LED0_ON_L + 4 * channel), p)
 
     
-    def i2cWrite(self, reg, value):
+    def i2c_write(self, reg, value):
         self.i2cbus.write_byte_data(self.i2cAddr, reg, value)
     
-    def i2cRead(self, reg):
+    def i2c_read(self, reg):
         return self.i2cbus.read_byte_data(self.i2cAddr, reg)
 
     def initPCA9685(self):
-        self.i2cWrite(self._MODE1, 0x00)
-        self.setFreq(50)
+        self.i2c_write(self._MODE1, 0x00)
+        self.set_freq(50)
         self.initialized = True
     
-    def setFreq(self, freq):
-        prescaleval = 25000000
-        prescaleval /= 4096
-        prescaleval /= freq
-        prescaleval -= 1
-        
-        prescale = prescaleval
-        oldmode = self.i2cRead(self._MODE1)
+    def set_freq(self, freq):
+        prescale = 25000000
+        prescale_value = prescale / 4096 / freq - 1
+        oldmode = self.i2c_read(self._MODE1)
         newmode = (oldmode & 0x7F) | 0x10
-        self.i2cWrite(self._MODE1, newmode)
-        self.i2cWrite(self._PRESCALE, 0x84)
-        self.i2cWrite(self._MODE1, oldmode)
+        self.i2c_write(self._MODE1, newmode)
+        self.i2c_write(self._PRESCALE, prescale_value)
+        self.i2c_write(self._MODE1, oldmode)
         time.sleep(0.005)
-        self.i2cWrite(self._MODE1, oldmode | 0xa1)
+        self.i2c_write(self._MODE1, oldmode | 0xa1)
         
-    def setPwm(self, channel, on, off):
+    def set_pwm(self, channel, on, off):
         if (channel < 0 or channel > 16):
             return
         
@@ -221,31 +217,31 @@ class STEPPER:
         buf.append((on >> 8) & 0xff)
         buf.append(off & 0xff)
         buf.append((off >> 8) & 0xff)
-        self.i2cWriteBuffer(channel, buf, 4)
+        self.i2c_write_buffer(channel, buf, 4)
     
-    def setStepper(self, index, dir):
+    def set_stepper(self, index, dir):
         if (index == 1):
             if (dir):
-                self.setPwm(10, self._BYG_CHA_L, self._BYG_CHA_H)
-                self.setPwm(8, self._BYG_CHB_L, self._BYG_CHB_H)
-                self.setPwm(9, self._BYG_CHC_L, self._BYG_CHC_H)
-                self.setPwm(11, self._BYG_CHD_L, self._BYG_CHD_H)
+                self.set_pwm(10, self._BYG_CHA_L, self._BYG_CHA_H)
+                self.set_pwm(8, self._BYG_CHB_L, self._BYG_CHB_H)
+                self.set_pwm(9, self._BYG_CHC_L, self._BYG_CHC_H)
+                self.set_pwm(11, self._BYG_CHD_L, self._BYG_CHD_H)
             else:
-                self.setPwm(10, self._BYG_CHC_L, self._BYG_CHC_H)
-                self.setPwm(8, self._BYG_CHD_L, self._BYG_CHD_H)
-                self.setPwm(9, self._BYG_CHA_L, self._BYG_CHA_H)
-                self.setPwm(11, self._BYG_CHB_L, self._BYG_CHB_H)
+                self.set_pwm(10, self._BYG_CHC_L, self._BYG_CHC_H)
+                self.set_pwm(8, self._BYG_CHD_L, self._BYG_CHD_H)
+                self.set_pwm(9, self._BYG_CHA_L, self._BYG_CHA_H)
+                self.set_pwm(11, self._BYG_CHB_L, self._BYG_CHB_H)
         else:
             if (dir):
-                self.setPwm(14, self._BYG_CHA_L, self._BYG_CHA_H)
-                self.setPwm(12, self._BYG_CHB_L, self._BYG_CHB_H)
-                self.setPwm(13, self._BYG_CHC_L, self._BYG_CHC_H)
-                self.setPwm(15, self._BYG_CHD_L, self._BYG_CHD_H)
+                self.set_pwm(14, self._BYG_CHA_L, self._BYG_CHA_H)
+                self.set_pwm(12, self._BYG_CHB_L, self._BYG_CHB_H)
+                self.set_pwm(13, self._BYG_CHC_L, self._BYG_CHC_H)
+                self.set_pwm(15, self._BYG_CHD_L, self._BYG_CHD_H)
             else:
-                self.setPwm(14, self._BYG_CHC_L, self._BYG_CHC_H)
-                self.setPwm(12, self._BYG_CHD_L, self._BYG_CHD_H)
-                self.setPwm(13, self._BYG_CHA_L, self._BYG_CHA_H)
-                self.setPwm(15, self._BYG_CHB_L, self._BYG_CHB_H)
+                self.set_pwm(14, self._BYG_CHC_L, self._BYG_CHC_H)
+                self.set_pwm(12, self._BYG_CHD_L, self._BYG_CHD_H)
+                self.set_pwm(13, self._BYG_CHA_L, self._BYG_CHA_H)
+                self.set_pwm(15, self._BYG_CHB_L, self._BYG_CHB_H)
 
     def scan(self):
         try:
@@ -256,7 +252,7 @@ class STEPPER:
             return False
 
     def reset(self):
-        self.i2cWrite(self._MODE1, 0x00)
-        self.i2cWrite(self._MODE2, 0x04)
+        self.i2c_write(self._MODE1, 0x00)
+        self.i2c_write(self._MODE2, 0x04)
 
 
