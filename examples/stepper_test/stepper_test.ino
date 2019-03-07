@@ -49,5 +49,4 @@ void loop() {
     delay(2000);
     motor.stepperTurn(PCA_M1_M2,  PCA_CCW,  10);
     delay(2000);
-    //motor.reset();
 }
