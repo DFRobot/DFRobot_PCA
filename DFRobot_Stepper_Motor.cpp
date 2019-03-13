@@ -14,7 +14,7 @@ DFRobot_Stepper_Motor::~DFRobot_Stepper_Motor()
     this->initialized = false;
 }
 
-bool DFRobot_Stepper_Motor::begin()
+bool DFRobot_Stepper_Motor::available()
 {
     Wire.begin();
     if (scan() == true)
@@ -58,8 +58,8 @@ void DFRobot_Stepper_Motor::motorRun(eMotors index, eDir direction, int speed)
         pp = 9;
         pn = 8;
     }else if(index == PCA_M2){
-        pp = 10;
-        pn = 11;
+        pp = 11;
+        pn = 10;
     }else if(index == PCA_M3){
         pp = 13;
         pn = 12;
@@ -82,17 +82,17 @@ void DFRobot_Stepper_Motor::motorRun(eMotors index, eDir direction, int speed)
     }
 }
 
-void DFRobot_Stepper_Motor::stepperDegree(eSteppers index, eDir direction, int degree)
+void DFRobot_Stepper_Motor::stepperStep(eSteppers index, eDir direction, int step)
 {
     if (!initialized) {
         this->initPCA9685();
     }
-    if (degree == 0) { 
+    if (step == 0) { 
         return;
     }
     this->setStepper42(index, direction > 0);
-    uint32_t Degree = abs(degree);
-    delay( (50000 * Degree) / (360 * 50) + 80);
+    uint32_t Step = abs(step);
+    delay((47000 * Step) / (200 * 50) + 80);
     if (index == 1) {
         this->motorStop(PCA_M1);
         this->motorStop(PCA_M2);
@@ -104,12 +104,12 @@ void DFRobot_Stepper_Motor::stepperDegree(eSteppers index, eDir direction, int d
 
 void DFRobot_Stepper_Motor::stepperTurn(eSteppers index, eDir direction, double turn)
 {
-    this->stepperDegree(index, direction, (int)(turn * 360));
+    this->stepperStep(index, direction, (int)(turn * 200));
 }
 
 void DFRobot_Stepper_Motor::stepperTurn(eSteppers index, eDir direction, int turn)
 {
-    this->stepperDegree(index, direction, turn * 360);
+    this->stepperStep(index, direction, turn * 200);
 }
 
 void DFRobot_Stepper_Motor::motorStop(eMotors index)
@@ -121,8 +121,8 @@ void DFRobot_Stepper_Motor::motorStop(eMotors index)
         pp = 9;
         pn = 8;
     }else if(index == PCA_M2){
-        pp = 10;
-        pn = 11;
+        pp = 11;
+        pn = 10;
     }
     else if(index == PCA_M3){
         pp = 13;
@@ -145,22 +145,27 @@ void DFRobot_Stepper_Motor::motorStop(eMotors index)
 
 void DFRobot_Stepper_Motor::i2cWriteBuffer(int addr, unsigned char *p, int len)
 {
+    lastOperateStatus = eStepper_WriteBufferError;
     Wire.beginTransmission(addr);
     for(int i=0; i<len; i++)
         Wire.write((uint8_t)p[i]);
     Wire.endTransmission();
+    lastOperateStatus = eStepper_ok;
 }
 
 void DFRobot_Stepper_Motor::i2cWrite(int addr, int reg, int value)
 {
+    lastOperateStatus = eStepper_WriteRegError;
     Wire.beginTransmission(addr);
     Wire.write(reg);
     Wire.write(value);
     Wire.endTransmission();
+    lastOperateStatus = eStepper_ok;
 }
 
 int DFRobot_Stepper_Motor::i2cRead(int addr, int reg)
 {
+    lastOperateStatus = eStepper_ReadRegError;
     uint8_t data;
     Wire.beginTransmission(addr);
     Wire.write(reg);
@@ -168,10 +173,12 @@ int DFRobot_Stepper_Motor::i2cRead(int addr, int reg)
     Wire.requestFrom(addr, 1);
     data = Wire.read();
     return data;
+    lastOperateStatus = eStepper_ok;
 }
 
 void DFRobot_Stepper_Motor::initPCA9685()
 {
+    lastOperateStatus = eStepper_InitError;
     if (scan() == true){
         Wire.begin();
         this->i2cWrite(i2cAddr, DFROBOT_PCA_MODE1, 0x00);
@@ -181,17 +188,18 @@ void DFRobot_Stepper_Motor::initPCA9685()
         this->initialized = false;
         Serial.print("I2C address is ");Serial.println(i2cAddr,HEX);
     }
+    lastOperateStatus = eStepper_ok;
 }
 
 void DFRobot_Stepper_Motor::setFreq(int freq)
 {
     uint32_t prescale = 25000000;
 
-    uint32_t prescaleVal = prescale / 4096 / 200 - 1;
+    uint32_t prescaleVal = prescale / 4096 / freq - 1;
     uint8_t oldmode = this->i2cRead(i2cAddr, DFROBOT_PCA_MODE1);
     uint8_t newmode = (oldmode & 0x7F) | 0x10; // sleep
     this->i2cWrite(i2cAddr, DFROBOT_PCA_MODE1, newmode); // go to sleep
-    this->i2cWrite(i2cAddr, DFROBOT_PCA_PRESCALE, prescale); // set the prescaler
+    this->i2cWrite(i2cAddr, DFROBOT_PCA_PRESCALE, prescaleVal); // set the prescaler
     this->i2cWrite(i2cAddr, DFROBOT_PCA_MODE1, oldmode);
     delayMicroseconds(5000);
     this->i2cWrite(i2cAddr, DFROBOT_PCA_MODE1, oldmode | 0xa1);
@@ -227,17 +235,17 @@ void DFRobot_Stepper_Motor::setStepper42(int index, bool dir)
         }
     } else {
         if (dir) {
-            this->setPwm(14, DFROBOT_PCA_BYG_CHA_L, DFROBOT_PCA_BYG_CHA_H);
-            this->setPwm(12, DFROBOT_PCA_BYG_CHB_L, DFROBOT_PCA_BYG_CHB_H);
-            this->setPwm(13, DFROBOT_PCA_BYG_CHC_L, DFROBOT_PCA_BYG_CHC_H);
-            this->setPwm(15, DFROBOT_PCA_BYG_CHD_L, DFROBOT_PCA_BYG_CHD_H);
+            this->setPwm(15, DFROBOT_PCA_BYG_CHA_L, DFROBOT_PCA_BYG_CHA_H);
+            this->setPwm(13, DFROBOT_PCA_BYG_CHB_L, DFROBOT_PCA_BYG_CHB_H);
+            this->setPwm(12, DFROBOT_PCA_BYG_CHC_L, DFROBOT_PCA_BYG_CHC_H);
+            this->setPwm(14, DFROBOT_PCA_BYG_CHD_L, DFROBOT_PCA_BYG_CHD_H);
         
         
         } else {
-            this->setPwm(14, DFROBOT_PCA_BYG_CHC_L, DFROBOT_PCA_BYG_CHC_H);
-            this->setPwm(12, DFROBOT_PCA_BYG_CHD_L, DFROBOT_PCA_BYG_CHD_H);
-            this->setPwm(13, DFROBOT_PCA_BYG_CHA_L, DFROBOT_PCA_BYG_CHA_H);
-            this->setPwm(15, DFROBOT_PCA_BYG_CHB_L, DFROBOT_PCA_BYG_CHB_H);
+            this->setPwm(15, DFROBOT_PCA_BYG_CHC_L, DFROBOT_PCA_BYG_CHC_H);
+            this->setPwm(13, DFROBOT_PCA_BYG_CHD_L, DFROBOT_PCA_BYG_CHD_H);
+            this->setPwm(12, DFROBOT_PCA_BYG_CHA_L, DFROBOT_PCA_BYG_CHA_H);
+            this->setPwm(14, DFROBOT_PCA_BYG_CHB_L, DFROBOT_PCA_BYG_CHB_H);
         }
     }
 }
@@ -254,5 +262,5 @@ bool DFRobot_Stepper_Motor::scan()
 void DFRobot_Stepper_Motor::reset()
 {
     this->i2cWrite(i2cAddr, DFROBOT_PCA_MODE1, 0x00);
-    this->i2cWrite(i2cAddr, DFROBOT_PCA_MODE2, 0x04);
+    //this->i2cWrite(i2cAddr, DFROBOT_PCA_MODE2, 0x04);
 }

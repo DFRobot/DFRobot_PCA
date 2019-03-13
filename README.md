@@ -84,13 +84,13 @@ void motorRun(eMotors index, eDir direction, int speed);
 void servo(eServos index, int degree);
 
 /*!
- * @brief Stepper motor rotates by an angle of a fixed degree
+ * @brief Stepper motor rotates by an angle of a fixed step
  *
  * @param index = PCA_M1_M2,PCA_M3_M4(stepper motor interface)
  * @param direction = PCA_CW(clockwise),PCA_CCW(counter-clockwise)
- * @param degree = 0~360
+ * @param step = 0~200
  */
-void stepperDegree(eSteppers index, eDir direction, int degree);
+void stepperDegree(eSteppers index, eDir direction, int step);
 
 /*!
  * @brief Stepper motor rotates for fixed turns.

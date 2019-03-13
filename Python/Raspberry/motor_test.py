@@ -33,7 +33,7 @@ from DFRobot_Stepper_Motor import STEPPER
 
 motor = STEPPER(1, STEPPER.PCA9685_ADDRESS16) 
 #begin return True if succeed, otherwise return False
-while not motor.begin():
+while not motor.available():
     time.sleep(2)
     print("PCA9685 init failed")
 

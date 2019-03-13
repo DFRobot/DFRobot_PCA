@@ -70,7 +70,7 @@ STEPPER(bus, addr)
 @return true if PCA8591 init succeed
 @return false if PCA8591 init failed
 '''
-def begin(self)
+def available(self)
 
 '''
 @brief Motor rotates at a fixed speed;
@@ -90,13 +90,13 @@ def motor_run(self, motors_index, dir_direction, speed)
 def servo(self, servos_index, degree)
 
 '''
-@brief Stepper motor rotates by an angle of a fixed degree.
+@brief Stepper motor rotates by an angle of a fixed step.
 
 @param index = M1_M2,M3_M4(stepper motor interface)
 @param direction = CW(clockwise),CCW(counter-clockwise)
-@param degree = 0~360
+@param step = 0~200
 '''
-def stepper_degree(self, steppers_index, dir_direction, degree)
+def stepper_step(self, steppers_index, dir_direction, step)
 
 '''
 @brief Stepper motor rotates for fixed turns.

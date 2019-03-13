@@ -12,7 +12,31 @@ enum eAddress{
     PCA_Address9 = 0x48, PCA_Address10 = 0x49, 
     PCA_Address11 = 0x4A, PCA_Address12 = 0x4B,
     PCA_Address13 = 0x4C, PCA_Address14 = 0x4D,
-    PCA_Address15 = 0x4E, PCA_Address16 = 0x4F
+    PCA_Address15 = 0x4E, PCA_Address16 = 0x4F,
+    PCA_Address17 = 0x50, PCA_Address18 = 0x51,
+    PCA_Address19 = 0x52, PCA_Address20 = 0x53,
+    PCA_Address21 = 0x54, PCA_Address22 = 0x55,
+    PCA_Address23 = 0x56, PCA_Address24 = 0x57,
+    PCA_Address25 = 0x58, PCA_Address26 = 0x59, 
+    PCA_Address27 = 0x5A, PCA_Address28 = 0x5B,
+    PCA_Address29 = 0x5C, PCA_Address30 = 0x5D,
+    PCA_Address31 = 0x5E, PCA_Address32 = 0x5F,
+    PCA_Address33 = 0x60, PCA_Address34 = 0x61,
+    PCA_Address35 = 0x62, PCA_Address36 = 0x63,
+    PCA_Address37 = 0x64, PCA_Address38 = 0x65,
+    PCA_Address39 = 0x66, PCA_Address40 = 0x67,
+    PCA_Address41 = 0x68, PCA_Address42 = 0x69, 
+    PCA_Address43 = 0x6A, PCA_Address44 = 0x6B,
+    PCA_Address45 = 0x6C, PCA_Address46 = 0x6D,
+    PCA_Address47 = 0x6E, PCA_Address48 = 0x6F,
+    PCA_Address49 = 0x70, PCA_Address50 = 0x71,
+    PCA_Address51 = 0x72, PCA_Address52 = 0x73,
+    PCA_Address53 = 0x74, PCA_Address54 = 0x75,
+    PCA_Address55 = 0x76, PCA_Address56 = 0x77,
+    PCA_Address57 = 0x78, PCA_Address58 = 0x79, 
+    PCA_Address59 = 0x7A, PCA_Address60 = 0x7B,
+    PCA_Address61 = 0x7C, PCA_Address62 = 0x7D,
+    PCA_Address63 = 0x7E, PCA_Address64 = 0x7F
 };
 
 #define DFROBOT_PCA_MODE1   0x00
@@ -107,6 +131,14 @@ enum eSteppers {
     PCA_M3_M4 = 0x2
 };
 
+enum eStepper_Status{
+    eStepper_ok,
+    eStepper_InitError,
+    eStepper_WriteRegError,
+    eStepper_WriteBufferError,
+    eStepper_ReadRegError,
+};
+
 class DFRobot_Stepper_Motor
 {
     public:
@@ -114,15 +146,18 @@ class DFRobot_Stepper_Motor
     DFRobot_Stepper_Motor(eAddress i2cAddr);
     ~DFRobot_Stepper_Motor();
     
+    eStepper_Status lastOperateStatus;
+    
     void    servo(eServos index, int degree),
             motorRun(eMotors index, eDir direction, int speed),
-            stepperDegree(eSteppers index, eDir direction, int degree),
+            stepperStep(eSteppers index, eDir direction, int step),
             stepperTurn(eSteppers index, eDir direction, double turn),
             stepperTurn(eSteppers index, eDir direction, int turn),
             motorStop(eMotors index),
             reset();
 
-    bool    begin();
+    bool    available();
+    
 
     private:
     

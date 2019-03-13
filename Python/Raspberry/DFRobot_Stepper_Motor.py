@@ -86,7 +86,7 @@ class STEPPER:
         self.i2cbus=smbus.SMBus(bus)
         self.i2cAddr = addr
     
-    def begin(self):
+    def available(self):
         if not self.scan():
             return False
         return True
@@ -117,8 +117,8 @@ class STEPPER:
             pp = 9;
             pn = 8;
         elif(motors_index == self.M2):
-            pp = 10
-            pn = 11
+            pp = 11
+            pn = 10
         elif(motors_index == self.M3):
             pp = 13
             pn = 12
@@ -137,14 +137,14 @@ class STEPPER:
             self.set_pwm(pp, 0, 0)
             self.set_pwm(pn, 0, -speed)
 
-    def stepper_degree(self, steppers_index, dir_direction, degree):
+    def stepper_step(self, steppers_index, dir_direction, step):
         if self.begin() == True:
             self.initPCA9685()
-        if (degree == 0):
+        if (step == 0):
             return
-        degree = abs(degree)
+        Step = abs(step)
         self.set_stepper(steppers_index, dir_direction > 0);
-        time.sleep( (50 * degree) / (360 * 50))
+        time.sleep( (47 * Step) / (200 * 50))
         if (steppers_index == 1):
             self.motor_stop(self.M1)
             self.motor_stop(self.M2)
@@ -153,10 +153,10 @@ class STEPPER:
             self.motor_stop(self.M4)
 
     def stepper_turn(self, steppers_index, dir_direction, double_turn):
-        self.stepper_degree(steppers_index, dir_direction, (double_turn * 360))
+        self.stepper_degree(steppers_index, dir_direction, (double_turn * 200))
 
     def stepper_turn(self, steppers_index, dir_direction, turn):
-        self.stepper_degree(steppers_index, dir_direction, turn * 360)
+        self.stepper_degree(steppers_index, dir_direction, turn * 200)
 
     def motor_stop(self, motors_index):
         pn = 0
@@ -166,8 +166,8 @@ class STEPPER:
             pp = 9;
             pn = 8;
         elif(motors_index == self.M2):
-            pp = 10
-            pn = 11
+            pp = 11
+            pn = 10
         elif(motors_index == self.M3):
             pp = 13
             pn = 12

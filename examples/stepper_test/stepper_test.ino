@@ -37,7 +37,7 @@ DFRobot_Stepper_Motor motor(PCA_Address16);
 void setup() {
     Serial.begin(115200);
     Wire.begin();
-    while(!motor.begin()){                //Begin return True if succeed, otherwise return False
+    while(!motor.available()){                //Begin return True if succeed, otherwise return False
         delay(2000);
         Serial.println("PCA9685 init failed");
     }
@@ -45,8 +45,9 @@ void setup() {
 }
 
 void loop() {
-    motor.stepperDegree(PCA_M1_M2,  PCA_CW,  180);
+    motor.stepperStep(PCA_M1_M2,  PCA_CW,  200);
     delay(2000);
     motor.stepperTurn(PCA_M1_M2,  PCA_CCW,  10);
     delay(2000);
+    //motor.reset();
 }
