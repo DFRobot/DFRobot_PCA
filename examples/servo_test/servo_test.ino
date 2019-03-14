@@ -41,7 +41,7 @@ void setup() {
         delay(2000);
         Serial.println("PCA9685 init failed");
     }
-    //motor.reset();
+    //motor.reset();// reset PCA9685
 }
 
 void loop() {

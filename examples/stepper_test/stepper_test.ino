@@ -41,7 +41,7 @@ void setup() {
         delay(2000);
         Serial.println("PCA9685 init failed");
     }
-    //motor.reset();
+    //motor.reset();//reset PCA9685
 }
 
 void loop() {
@@ -49,5 +49,4 @@ void loop() {
     delay(2000);
     motor.stepperTurn(PCA_M1_M2,  PCA_CCW,  10);
     delay(2000);
-    //motor.reset();
 }
