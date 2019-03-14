@@ -161,7 +161,7 @@ class STEPPER:
     def motor_stop(self, motors_index):
         pn = 0
         pp = 0
-        
+
         if(motors_index == self.M1):
             pp = 9;
             pn = 8;

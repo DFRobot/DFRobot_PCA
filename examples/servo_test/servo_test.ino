@@ -45,17 +45,17 @@ void setup() {
 }
 
 void loop() {
-    motor.servo(PCA_S7, 30);//control the servo of pin S5 to rotate to the position of 30 degree.
+    motor.servo(PCA_S5, 30);//control the servo of pin S5 to rotate to the position of 30 degree.
     delay(1000);
-    motor.servo(PCA_S7, 60);//control the servo of Pin S5 to rotate to the position of 60 degree.
+    motor.servo(PCA_S5, 60);//control the servo of Pin S5 to rotate to the position of 60 degree.
     delay(1000);
-    motor.servo(PCA_S7, 90);//control the servo of Pin S5 to rotate to the position of 90 degree.
+    motor.servo(PCA_S5, 90);//control the servo of Pin S5 to rotate to the position of 90 degree.
     delay(1000);
-    motor.servo(PCA_S7, 120);//control the servo of Pin S5 to rotate to the position of 120 degree.
+    motor.servo(PCA_S5, 120);//control the servo of Pin S5 to rotate to the position of 120 degree.
     delay(1000);
-    motor.servo(PCA_S7, 150);//control the servo of Pin S5 to rotate to the position of 150 degree.
+    motor.servo(PCA_S5, 150);//control the servo of Pin S5 to rotate to the position of 150 degree.
     delay(1000);
-    motor.servo(PCA_S7, 180);//control the servo of Pin S5 to rotate to the position of 180 degree.
+    motor.servo(PCA_S5, 180);//control the servo of Pin S5 to rotate to the position of 180 degree.
     delay(1000);
 
 }
